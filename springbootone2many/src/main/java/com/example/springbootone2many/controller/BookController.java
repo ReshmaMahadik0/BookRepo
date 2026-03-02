@@ -4,8 +4,6 @@ import com.example.springbootone2many.entity.Book;
 import com.example.springbootone2many.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,8 +17,9 @@ public class BookController {
     private BookService bookService;
 
     @PostMapping()
-    public Book CreateBook(@RequestBody Book book){
-        return bookService.saveBook(book);
+    public ResponseEntity<Book> addBook(@RequestBody Book book){
+        Book saveBook = bookService.saveBook(book);
+        return ResponseEntity.status(HttpStatus.CREATED).body(saveBook);
     }
 
     @GetMapping()
@@ -30,16 +29,18 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable long id){
-//        Book book = bookService.getBookById(id);
-//        if (book != null){
-//            return ResponseEntity.ok(book);
-//        }
-//        else {
-//            return ResponseEntity.notFound().build();
-//        }
-        return bookService.getBookById(id)
-                .map(ResponseEntity::ok)  // If found → return Book with 200 OK
-                .orElse(ResponseEntity.notFound().build()); // If not found → return 404
+        Book book = bookService.getBookById(id);
+//        book.getChapter().remove(1);
+//        bookService.saveBook(book);
+        if (book != null){
+            return ResponseEntity.ok(book);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+//        return bookService.getBookById(id)
+//                .map(ResponseEntity::ok)  // If found → return Book with 200 OK
+//                .orElse(ResponseEntity.notFound().build()); // If not found → return 404
     }
 
     @PutMapping("/{id}")

@@ -17,11 +17,16 @@ public class BookService {
 
     public Book saveBook(Book book) {
         // return bookRepository.save(book);
-        if (book.getChapter() != null){
-            for(Chapter chapter : book.getChapter()){
-                chapter.setBook(book);
-            }
-        }
+//        if (book.getChapter() != null){
+//            for(Chapter chapter : book.getChapter()){
+//                chapter.setBook(book);
+//            }
+//        }
+
+        
+//        if (book.getChapter() != null){
+//            book.getChapter().forEach(chapter -> chapter.setBook(book));
+//        }
         return bookRepository.save(book);
     }
 
@@ -29,11 +34,12 @@ public class BookService {
         return bookRepository.findAll();
     }
 
-    // public Book getBookById(long id){
-    // return bookRepository.findById(id).orElse(null);
-    public Optional<Book> getBookById(long id) {
-        return bookRepository.findById(id);
-    }
+     public Book getBookById(long id) {
+         return bookRepository.findById(id).orElse(null);
+     }
+//    public Optional<Book> getBookById(long id) {
+//        return bookRepository.findById(id);
+//    }
 
     public Book updateBook(long id, Book updateBook){
         Optional<Book> existingBook = bookRepository.findById(id);
@@ -41,15 +47,16 @@ public class BookService {
         if (existingBook.isPresent()) {
             Book book = existingBook.get();
             book.setBookName(updateBook.getBookName());
+            book.setAuthor(updateBook.getAuthor());
 
-            if (updateBook.getChapter() != null) {
-                book.getChapter().clear();  //remove old chapter
-
-                for (Chapter chapter : updateBook.getChapter()) {
-                    chapter.setBook(book); // set parent book
-                    book.getChapter().add(chapter);  //add new chapter
-                }
-            }
+//            if (updateBook.getChapter() != null) {
+//                book.getChapter().clear();  //remove old chapter
+//
+//                for (Chapter chapter : updateBook.getChapter()) {
+//                    chapter.setBook(book); // set parent book
+//                    book.getChapter().add(chapter);  //add new chapter
+//                }
+//            }
             return bookRepository.save(book);
         }
         else{
@@ -76,3 +83,5 @@ public class BookService {
         }
     }
 }
+
+

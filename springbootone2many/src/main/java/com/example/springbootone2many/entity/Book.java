@@ -8,21 +8,34 @@ import jakarta.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "book")
 public class Book {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "Book_id")
     private long id;
     @Column(name = "book_name")
     private String bookName;
+    @Column(name= "author")
+    private String author;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+    @OneToMany(  mappedBy = "book",cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+
+   // @JoinColumn(name = "book_id_fk", referencedColumnName = "Book_id")
+    //unidirection
     //Without cascade, chapters may not be saved automatically when saving a book.
     // saves/deletes chapters with book
     // orphanRemoval = true → removes chapters that are no longer linked to the book
     @JsonManagedReference
     private List<Chapter> chapter;
+
+    public Book(long id, String bookName, String author, List<Chapter> chapter) {
+        this.id = id;
+        this.bookName = bookName;
+        this.author = author;
+        this.chapter = chapter;
+    }
 
     public long getId() {
         return id;
@@ -46,5 +59,13 @@ public class Book {
 
     public void setChapter(List<Chapter> chapter) {
         this.chapter = chapter;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
     }
 }

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "Chapter_details")
 public class Chapter {
 
     @Id
@@ -15,7 +16,7 @@ public class Chapter {
     private String topic;
 
     @ManyToOne
-    @JoinColumn(name = "book_id")
+    @JoinColumn(name = "book_id_owning_fk", referencedColumnName = "book_id")
     @JsonBackReference
     private Book book;
 

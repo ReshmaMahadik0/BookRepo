@@ -1,0 +1,53 @@
+
+What is Exception in java?
+
+
+What are reasons due to which exceptions occurs?
+
+invalid user input
+
+Exception Handling
+1) try catch finally
+2) throw throws
+exception disrupts the normal execution of the program,
+by adding try catch block we can resume that execution.
+
+puncture => fixed the issue => resumed your journey
+
+try {
+    the code which might cause an exception should go into try block
+}
+
+catch(Exception ex){
+    code for handling the exception caused by try block
+    Code inside this will get executed only when we get exception in try block
+}
+
+finally {
+    whether exception occurs or not code inside this finally block will gets executed
+}
+
+
+A) Combination 1
+try{
+
+} catch(){
+
+}
+
+B) Combination 2
+try {
+
+} finally {
+
+}
+
+C) Combination 3
+try{
+
+} catch(){
+
+} finally {
+
+}
+
